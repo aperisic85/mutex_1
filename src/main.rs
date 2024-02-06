@@ -1,4 +1,4 @@
-use std::{sync::Mutex, thread};
+use std::{sync::Mutex, thread, time::Duration};
 
 fn main() {
     let m = Mutex::new(0);
@@ -12,10 +12,11 @@ fn main() {
                     
                 }
                 println!("{:?} {}", thread::current().id(), *guard );
+                thread::sleep(Duration::from_secs(1));
                 
             }); // guard is droped here
         }
-        println!("Done spawning");
-    })
-    
+    });
+    println!("m: {}", &m.into_inner().unwrap());
+
 }
