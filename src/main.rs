@@ -8,15 +8,12 @@ fn main() {
                 //println!("  spawned: {:?}",thread::current().id());
                 let mut guard = m.lock().unwrap();
                 for _ in 0..10000 {
-                    *guard +=1;
-                    
+                    *guard += 1;
                 }
-                println!("{:?} {}", thread::current().id(), *guard );
+                drop(guard); //with explicit drop of guard, all is done in 1 sec.
                 thread::sleep(Duration::from_secs(1));
-                
             }); // guard is droped here
         }
     });
     println!("m: {}", &m.into_inner().unwrap());
-
 }
